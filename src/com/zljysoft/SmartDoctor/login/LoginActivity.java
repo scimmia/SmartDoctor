@@ -1,4 +1,4 @@
-package com.zljysoft.SmartDoctor.doctor;
+package com.zljysoft.SmartDoctor.login;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
