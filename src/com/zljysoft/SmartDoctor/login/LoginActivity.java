@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.zljysoft.SmartDoctor.R;
+import com.zljysoft.SmartDoctor.doctor.VisitPatientsActivity;
 import com.zljysoft.SmartDoctor.soaputil.DeptFromHIS;
 import com.zljysoft.SmartDoctor.soaputil.SoapClient;
 import com.zljysoft.SmartDoctor.soaputil.SoapRequestStruct;
@@ -170,7 +171,7 @@ public class LoginActivity extends Activity {
             Log.e("TAG", "onPostExecute");
 
             mpDialog.dismiss();
-            Intent intent = new Intent(LoginActivity.this, LoginActivity.class);
+            Intent intent = new Intent(LoginActivity.this, VisitPatientsActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
             startActivity(intent);
             finish();

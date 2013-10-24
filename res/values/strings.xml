@@ -9,4 +9,33 @@
     <string name="error_field_required">请填写内容</string>
     <string name="login_logining">登录中...</string>
 
+    <string name="doctor_loading_patients">加载中...</string>
+
+    <string-array name="doctor_maina_funcation">
+        <item>全区病人</item>
+        <item>辖内病人</item>
+        <item>检索</item>
+        <item>扫码</item>
+    </string-array>
+    <string-array name="doctor_main_funcation">
+        <item>入院记录</item>
+        <item>病程记录</item>
+        <item>手术记录</item>
+        <item>长期医嘱</item>
+        <item>临时医嘱</item>
+    </string-array>
+    <string-array name="all_paients">
+        <item>张三</item>
+        <item>李四</item>
+        <item>王五</item>
+        <item>任六</item>
+        <item>侯七</item>
+        <item>马八</item>
+    </string-array>
+    <string-array name="my_paients">
+        <item>张三</item>
+        <item>王五</item>
+        <item>马八</item>
+    </string-array>
+
 </resources>
