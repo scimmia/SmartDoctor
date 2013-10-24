@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">SmartDoctor</string>
+    <string name="app_name">中联佳裕</string>
+    <string name="login_username">请输入用户名</string>
+    <string name="login_password">请输入密码</string>
+    <string name="login_ok">登录</string>
+    <string name="login_savepassword">保存密码</string>
+    <string name="login_action_short">登录</string>
+    <string name="error_field_required">请填写内容</string>
+    <string name="login_logining">登录中...</string>
+
 </resources>
