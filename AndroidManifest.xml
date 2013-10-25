@@ -16,6 +16,7 @@
         <activity android:name=".doctor.LoadPaientsActivity"/>
         <activity android:name=".doctor.SearchPaientAcivity"/>
         <activity android:name=".doctor.SearchPaientQRCodeActivity"/>
+        <activity android:name=".doctor.PatientInfoActivity"/>
 
     </application>
 

@@ -64,7 +64,7 @@ public class LoginActivity extends Activity {
             }
         });
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        mUsernameView.setText(sharedPreferences.getString(LOGIN_USER_NAME,null));
+        mUsernameView.setText(sharedPreferences.getString(LOGIN_USER_NAME, null));
         mPasswordView.setText(sharedPreferences.getString(LOGIN_PASSWORD, null));
         mSavePasswordView.setChecked(sharedPreferences.getBoolean(LOGIN_SAVE_PASSWORD, true));
     }

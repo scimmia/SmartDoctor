@@ -1,28 +1,19 @@
 package com.zljysoft.SmartDoctor.doctor;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.database.Cursor;
-import android.net.Uri;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.Contacts;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SearchViewCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.*;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import com.zljysoft.SmartDoctor.R;
 
 import java.util.LinkedList;
@@ -120,6 +111,9 @@ public class LoadPaientsActivity extends FragmentActivity {
         public void onListItemClick(ListView l, View v, int position, long id) {
             //todo
             Log.i("FragmentComplexList", "Item clicked: " + id);
+            Intent intent = new Intent(getActivity(), PatientInfoActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+            startActivity(intent);
         }
         private class LoadPaientsTask extends AsyncTask<Void,Void,Void> {
             private ProgressDialog mpDialog;

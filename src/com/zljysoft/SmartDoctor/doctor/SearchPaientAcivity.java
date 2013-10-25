@@ -1,21 +1,17 @@
 package com.zljysoft.SmartDoctor.doctor;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.AsyncTaskLoader;
-import android.support.v4.content.Loader;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import com.zljysoft.SmartDoctor.R;
@@ -55,12 +51,13 @@ public class SearchPaientAcivity extends FragmentActivity {
         @Override
         public void onActivityCreated(Bundle savedInstanceState) {
             super.onActivityCreated(savedInstanceState);
+            editText = (EditText) getActivity().findViewById(R.id.et_search_content);
+            editText.setError(null);
+//            editText.requestFocus();
             getActivity().findViewById(R.id.btn_search_bed).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    editText = (EditText) getActivity().findViewById(R.id.et_search_content);
-                    String searchContent = editText.getText().toString();
-                    if (searchContent.isEmpty()){
+                    if (TextUtils.isEmpty(editText.getText())){
                         editText.setError(getString(R.string.error_field_required));
                     }
                     else {
@@ -70,11 +67,7 @@ public class SearchPaientAcivity extends FragmentActivity {
                 }
             });
             mListView = (ListView) getActivity().findViewById(R.id.lv_search_result);
-//            String[] paientsTemp = getResources().getStringArray(R.array.all_paients);
-//            LinkedList<String> data = new LinkedList<String>();
-//            for (String s :paientsTemp){
-//                data.add(s);
-//            }
+
             patientsList = new LinkedList<Object>();
             mPatientAdapter = new PatientsAdapter(getActivity(),patientsList);
             mListView.setAdapter(mPatientAdapter);
@@ -100,6 +93,7 @@ public class SearchPaientAcivity extends FragmentActivity {
 
             @Override
             protected Void doInBackground(Void... p) {
+                // todo
                 String[] m = getResources().getStringArray(R.array.all_paients);
                 patientsList.clear();
                 for (String n:m){
@@ -107,7 +101,6 @@ public class SearchPaientAcivity extends FragmentActivity {
                         patientsList.add(n);
                     }
                 }
-//                patientsList = new LinkedList<Object>();
                 return null;
             }
 
@@ -125,99 +118,5 @@ public class SearchPaientAcivity extends FragmentActivity {
         }
 
     }
-
-    public static class SearchPaientLoader extends AsyncTaskLoader<LinkedList<String>> {
-        String mContent;
-        String[] mPatients;
-        LinkedList<String> result;
-        public SearchPaientLoader(Context context,String content,String[] patients) {
-            super(context);
-            mContent = content;
-
-            mPatients = patients;
-        }
-
-        @Override
-        public LinkedList<String> loadInBackground() {
-            //todo
-            result = new LinkedList<String>();
-            for(String paient : mPatients){
-                if (paient.contains(mContent)){
-                   result.add(paient);
-                }
-            }
-
-            return result;  //To change body of implemented methods use File | Settings | File Templates.
-        }
-
-        /**
-         * Handles a request to start the Loader.
-         */
-        @Override
-        protected void onStartLoading() {
-            if (result !=null) {
-                // If we currently have a result available, deliver it
-                // immediately.
-                deliverResult(result);
-            }
-
-            if (result == null) {
-                // If the data has changed since the last time it was loaded
-                // or is not currently available, start a load.
-                forceLoad();
-            }
-        }
-
-        /**
-         * Handles a request to stop the Loader.
-         */
-        @Override
-        protected void onStopLoading() {
-            // Attempt to cancel the current load task if possible.
-            cancelLoad();
-        }
-
-        /**
-         * Handles a request to cancel a load.
-         */
-        @Override
-        public void onCanceled(LinkedList<String> apps) {
-            super.onCanceled(apps);
-
-            // At this point we can release the resources associated with 'apps'
-            // if needed.
-            onReleaseResources(apps);
-        }
-
-        /**
-         * Handles a request to completely reset the Loader.
-         */
-        @Override
-        protected void onReset() {
-            super.onReset();
-
-            // Ensure the loader is stopped
-            onStopLoading();
-
-            // At this point we can release the resources associated with 'apps'
-            // if needed.
-            if (result != null) {
-                onReleaseResources(result);
-                result = null;
-            }
-
-
-        }
-
-        /**
-         * Helper function to take care of releasing resources associated
-         * with an actively loaded data set.
-         */
-        protected void onReleaseResources(LinkedList<String> apps) {
-            // For a simple List<> there is nothing to do.  For something
-            // like a Cursor, we would close it here.
-        }
-    }
-
 
 }
