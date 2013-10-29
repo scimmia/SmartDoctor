@@ -105,8 +105,13 @@ public class PatientInfoActivity extends FragmentActivity {
                     break;
                 case 1:
                     fragment = new LoadPaientsActivity.LoadPaientsListFragment();
-                    break;default:
+                    break;
+                case 3:
+                    fragment = new StandingOrderListActivity.StandingOrderListFragment();
+                    break;
+                default:
                     fragment = new SearchPaientAcivity.SearchPaientFragment();
+
             }
             if (position == 0) {
                 ft.replace(R.id.fl_details, fragment);

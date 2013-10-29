@@ -10,6 +10,14 @@
     <string name="login_logining">登录中...</string>
 
     <string name="doctor_loading_patients">加载中...</string>
+    <string name="select_orders">选择医嘱</string>
+    <string name="long_press_to_select">长按进入编辑模式</string>
+    <string name="menu_order_cancel">取消</string>
+    <string name="menu_order_stop">停止</string>
+    <string name="menu_order_start">执行</string>
+    <string name="menu_order_add">添加</string>
+    <string name="order_dosage">dosage</string>
+    <string name="order_medicine">medicine</string>
 
     <string-array name="doctor_maina_funcation">
         <item>全区病人</item>
