@@ -22,6 +22,6 @@
          android:layout_width. -->
 
     <FrameLayout android:id="@+id/fl_details" android:layout_weight="1"
-                 android:layout_width="300dp" android:layout_height="match_parent"
+                 android:layout_width="match_parent" android:layout_height="match_parent"
         />
 </android.support.v4.widget.SlidingPaneLayout>

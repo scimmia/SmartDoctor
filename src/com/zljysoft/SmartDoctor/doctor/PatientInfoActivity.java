@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.zljysoft.SmartDoctor.R;
+import com.zljysoft.SmartDoctor.doctor.calendar.ProgressNotesActivity;
 
 /**
  * Created with IntelliJ IDEA.
@@ -104,7 +105,7 @@ public class PatientInfoActivity extends FragmentActivity {
                     fragment = DetailsFragment.newInstance(mLists[position]);
                     break;
                 case 1:
-                    fragment = new LoadPaientsActivity.LoadPaientsListFragment();
+                    fragment = new ProgressNotesActivity.ProgressNotesFragment();
                     break;
                 case 3:
                     fragment = new StandingOrderListActivity.StandingOrderListFragment();

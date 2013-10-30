@@ -162,7 +162,7 @@ public class StandingOrderListActivity extends FragmentActivity {
         ActionMode mActionMode;
         @Override
         public void onListItemClick(ListView l, View v, int position, long id) {
-            Log.i("FragmentList", "Item clicked: " + id);
+            Log.i("TAG", "Item clicked: " + id);
         }
         @Override
         public void onPause(){

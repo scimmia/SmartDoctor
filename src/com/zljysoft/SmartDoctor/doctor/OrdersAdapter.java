@@ -54,7 +54,7 @@ public class OrdersAdapter extends BaseAdapter {
 //        if (convertView == null){
             convertView = LayoutInflater.from(mContext).inflate(R.layout.doctor_adapter_order, null);
             viewHolder = new ViewHolder();
-            viewHolder.tv_title = (TextView) convertView.findViewById(R.id.tv_order_title);
+            viewHolder.tv_title = (CheckedTextView) convertView.findViewById(R.id.tv_order_title);
             viewHolder.detailLayout = (RelativeLayout) convertView.findViewById(R.id.rl_order_detail);
             convertView.setTag(viewHolder);
 //        } else {
@@ -103,7 +103,7 @@ public class OrdersAdapter extends BaseAdapter {
                 lp_medicine.setMargins(0,px,px,px);
                 tv_medicine.setLayoutParams(lp_medicine);
                 relativeLayout.addView(tv_medicine,lp_medicine);
-                Log.e("TAG",tv_medicineTemp.getId()+"\t"+tv_medicine.getId());
+//                Log.e("TAG",tv_medicineTemp.getId()+"\t"+tv_medicine.getId());
                 tv_medicineTemp = tv_medicine;
             }
         }
@@ -112,7 +112,7 @@ public class OrdersAdapter extends BaseAdapter {
         return convertView;
     }
     static class ViewHolder {
-        TextView tv_title;
+        CheckedTextView tv_title;
         RelativeLayout detailLayout;
     }
 }
