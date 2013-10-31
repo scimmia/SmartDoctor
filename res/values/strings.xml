@@ -18,6 +18,8 @@
     <string name="menu_order_add">添加</string>
     <string name="order_dosage">dosage</string>
     <string name="order_medicine">medicine</string>
+    <string name="contentDescription"> </string>
+    <string name="empty_list">今日无记录</string>
 
     <string-array name="doctor_maina_funcation">
         <item>全区病人</item>

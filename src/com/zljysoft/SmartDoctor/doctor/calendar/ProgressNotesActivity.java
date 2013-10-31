@@ -46,7 +46,7 @@ public class ProgressNotesActivity extends FragmentActivity {
         GridView mGridView;
         ListView mEventList;
 
-        HashMap<GregorianCalendar,LinkedList<String>> eventsMap;
+        HashMap<String,LinkedList<String>> eventsMap;
 
         LinkedList<GregorianCalendar> daysList;
         CalendarAdapter customerCalendarAdapter;
@@ -57,10 +57,16 @@ public class ProgressNotesActivity extends FragmentActivity {
         @Override
         public void onActivityCreated(Bundle savedInstanceState) {
             super.onActivityCreated(savedInstanceState);
+            getActivity().findViewById(R.id.header).setOnClickListener(null);
             mTextView = (TextView) getActivity().findViewById(R.id.customer_title);
             mGridView = (GridView) getActivity().findViewById(R.id.customer_gridview);
-            mEventList = (ListView)getActivity().findViewById(R.id.customer_listview);
-            eventsMap = new HashMap<GregorianCalendar, LinkedList<String>>();
+//            mEventList = (ListView)getActivity().findViewById(R.id.customer_listview);
+
+            mEventList = (ListView)getActivity().findViewById(android.R.id.list);
+            TextView emptyText = (TextView)getActivity().findViewById(android.R.id.empty);
+            mEventList.setEmptyView(emptyText);
+
+            eventsMap = new HashMap<String, LinkedList<String>>();
             daysList = new LinkedList<GregorianCalendar>();
             selectedDay = (GregorianCalendar) GregorianCalendar.getInstance();
             mTextView.setText(android.text.format.DateFormat.format("yyyy MMMM", selectedDay));
@@ -90,41 +96,19 @@ public class ProgressNotesActivity extends FragmentActivity {
             mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                    if (selectedDay.get(Calendar.MONTH)!=daysList.get(position).get(Calendar.MONTH)){
-//                        selectedDay = daysList.get(position);
-//                        updateCalendarList();
-//                        mTextView.setText(android.text.format.DateFormat.format("yyyy MMMM", selectedDay));
-//                        customerCalendarAdapter.notifyDataSetChanged();
-//                    }else {
-//                        selectedDay = daysList.get(position);
-//                        customerCalendarAdapter.setSelected(view);
-//                    }
+
                     GregorianCalendar temp = daysList.get(position);
-                    int result = 12*(daysList.get(position).get(Calendar.YEAR)-selectedDay.get(Calendar.YEAR))
-                            +(daysList.get(position).get(Calendar.MONTH)-selectedDay.get(Calendar.MONTH));
-                    int currentMonthTemp = selectedDay.get(Calendar.YEAR)
-                            +selectedDay.get(Calendar.MONTH);
-                    int selectedMonthTemp = daysList.get(position).get(Calendar.YEAR)
-                            + 12*daysList.get(position).get(Calendar.MONTH);
+                    if (DataUtil.compareSameDay(temp,selectedDay)==0){
+                        return;
+                    }
+                    int result = DataUtil.compareSameMonth(temp,selectedDay);
                     selectedDay.set(temp.get(Calendar.YEAR),temp.get(Calendar.MONTH),temp.get(Calendar.DATE));
                     if (result!=0){
                         updateCalendarList();
                     }
+                    testGeneraEvents();
                     customerCalendarAdapter.notifyDataSetChanged();
-                    mEventsAdater.notifyDataSetChanged();
-//                    if (result<0){
-//                        updateCalendarList();
-//                        customerCalendarAdapter.notifyDataSetChanged();
-//                    }else if (result==0){
-////                        selectedDay.set(GregorianCalendar.DATE,daysList.get(position).get(GregorianCalendar.DATE));
-//                        log("--------------");
-//                        log(selectedDay);
-//                        customerCalendarAdapter.notifyDataSetChanged();
-//                    } else {
-//                        updateCalendarList();
-//                        mTextView.setText(android.text.format.DateFormat.format("yyyy MMMM", selectedDay));
-//                        customerCalendarAdapter.notifyDataSetChanged();
-//                    }
+
                 }
             });
         }
@@ -135,9 +119,6 @@ public class ProgressNotesActivity extends FragmentActivity {
 
         public static void log(Calendar calendar){
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-            //日期到字符串的转换
-
             String today = df.format(calendar.getTime());
             log(today);
         }
@@ -181,23 +162,35 @@ public class ProgressNotesActivity extends FragmentActivity {
                 GregorianCalendar temp = (GregorianCalendar) firstDay.clone();
                 temp.add(Calendar.DATE,i);
                 daysList.add(temp);
-
-
-                testEvent(temp);
             }
         }
 
-        public void testEvent(GregorianCalendar gregorianCalendar){
-            int m = new Random().nextInt(5);
-            if (m==3){
-                LinkedList<String> events = new LinkedList<String>();
-                int n = new Random().nextInt(10);
-                for (int i =0;i<n;i++){
-                    events.add("event:"+i);
+        public void testGeneraEvents(){
+            GregorianCalendar firstDay = (GregorianCalendar) selectedDay.clone();
+            firstDay.set(GregorianCalendar.WEEK_OF_MONTH ,1);
+            firstDay.set(GregorianCalendar.DAY_OF_WEEK, 1);
+            int maxDays = 7*selectedDay.getActualMaximum(Calendar.WEEK_OF_MONTH);
+            for (int i = 1;i<maxDays;i++){
+                GregorianCalendar temp = (GregorianCalendar) firstDay.clone();
+                temp.add(Calendar.DATE,i);
+
+                int m = new Random().nextInt(5);
+                if (m==3){
+                    LinkedList<String> events = new LinkedList<String>();
+                    int n = new Random().nextInt(10);
+                    for (int h =0;h<n;h++){
+                        events.add("event:"+h);
+                    }
+                    if (!eventsMap.containsKey(DataUtil.transferCalendarToString(temp)))
+                        eventsMap.put(DataUtil.transferCalendarToString(temp),events);
                 }
-                eventsMap.put(gregorianCalendar,events);
             }
+            mSelectedDayEvents.clear();
+            if (eventsMap.get(DataUtil.transferCalendarToString(selectedDay))!=null)
+                mSelectedDayEvents.addAll(eventsMap.get(DataUtil.transferCalendarToString(selectedDay)));
+            mEventsAdater.notifyDataSetChanged();
         }
+
     }
 
 }

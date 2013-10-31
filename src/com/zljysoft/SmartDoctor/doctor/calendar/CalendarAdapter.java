@@ -24,12 +24,12 @@ import java.util.LinkedList;
  */
 public class CalendarAdapter extends BaseAdapter {
     Context mContext;
-    HashMap<GregorianCalendar,LinkedList<String>> events;
+    HashMap<String,LinkedList<String>> events;
     LinkedList<GregorianCalendar> daysList;
     GregorianCalendar selectedDay;
 
 
-    public CalendarAdapter(Context mContext, HashMap<GregorianCalendar, LinkedList<String>> events, LinkedList<GregorianCalendar> daysList, GregorianCalendar selectedDay) {
+    public CalendarAdapter(Context mContext, HashMap<String, LinkedList<String>> events, LinkedList<GregorianCalendar> daysList, GregorianCalendar selectedDay) {
         this.mContext = mContext;
         this.events = events;
         this.daysList = daysList;
@@ -58,7 +58,7 @@ public class CalendarAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.doctor_adapter_progress_note, null);
             viewHolder = new ViewHolder();
             viewHolder.textView = (TextView) convertView.findViewById(R.id.date);
-            viewHolder.imageView = (ImageView) convertView.findViewById(R.id.date_icon);
+            viewHolder.imageView = convertView.findViewById(R.id.date_icon);
             convertView.setTag(viewHolder);
         }else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -69,13 +69,12 @@ public class CalendarAdapter extends BaseAdapter {
         if (gregorianCalendarTemp.get(Calendar.MONTH)!=selectedDay.get(Calendar.MONTH)){
             viewHolder.textView.setTextColor(Color.WHITE);
         }else {
-            if (gregorianCalendarTemp.equals(selectedDay)){
-//                setSelected(convertView);
+            if (DataUtil.compareSameDay(gregorianCalendarTemp,selectedDay)==0){
                 convertView.setBackgroundResource(android.R.color.holo_blue_light);
             }
             viewHolder.textView.setTextColor(Color.BLUE);
         }
-        if (events.containsKey(gregorianCalendarTemp)){
+        if (events.containsKey(DataUtil.transferCalendarToString(gregorianCalendarTemp))){
             viewHolder.imageView.setVisibility(View.VISIBLE);
         }else {
             viewHolder.imageView.setVisibility(View.GONE);
@@ -85,6 +84,6 @@ public class CalendarAdapter extends BaseAdapter {
     }
     static class ViewHolder {
         TextView textView;
-        ImageView imageView;
+        View imageView;
     }
 }
